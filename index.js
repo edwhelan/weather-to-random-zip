@@ -6,7 +6,7 @@ const outputElement = document.querySelector('[data-output]');
 //FUNCTION THAT GETS DATA
 function showError(){
     console.log('woooops');
-    // alert('Oh no there is no more weather in that random zipcode...');
+    dummyZip(zip);
 }
 function getWeatherZip(){
     let zipCode = (randomZip()).pad(5);
@@ -14,6 +14,7 @@ function getWeatherZip(){
         .then(r => r.json() )
         .then(w => drawWeather(w.weather[0].description, w.name)) 
         .catch(showError)
+        .then(dummyZip(zipCode))
 }
 //FUNCTION THAT DRAWS WEATHER TO DOM
 function drawWeather(weatherStatus, place){
@@ -28,6 +29,13 @@ function main() {
 }
 
 main();
+
+// function that prints line UL when zipcode isnt valid
+function dummyZip(zip){
+    const badZip = document.createElement('li');
+    badZip.textContent = `${zip} zipcode not found!`;
+    outputElement.appendChild(badZip)
+}
 
 //Math to determine random ZipCode
 function randomZip(){

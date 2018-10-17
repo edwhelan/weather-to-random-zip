@@ -11,9 +11,10 @@ body{
 nav {
    display: flex;
    /* align-items: center; */
-   justify-content: center; 
+   justify-content: space-evenly; 
 }
 button {
+    margin-top: 20px;
     padding: 5px;
     width: 400px;
     border-radius: 5px;
