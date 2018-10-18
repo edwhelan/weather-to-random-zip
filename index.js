@@ -8,13 +8,34 @@ function showError(zip){
     console.log('woooops');
     console.log(zip);
     dummyZip(zip);
+
 }
 function getWeatherZip(){
     let zipCode = (randomZip()).pad(5);
     fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&APPID=d3c27155f41743fedfaa0b91989afba8`)
         .then(r => r.json() )
-        .then(w => drawWeather(w.weather[0].description, w.name)) 
+        // .then(cacheWeather)
+        .then(w => drawWeather(w.weather[0].description, w.name))
         .catch(()=>{showError(zipCode)} )
+}
+
+
+//Function for caching older weather
+function cacheWeather(weatherObj){
+    console.log(weatherObj);
+    if (weatherObj.weather[0].description && weatherObj.name){
+        console.log('putting the money in the bank');
+        localStorage.setItem('description', weatherObj.weather[0].description);
+        //save weather description and weather name
+        localStorage.setItem('name', weatherObj.name);
+    }
+    return weatherObj;
+}
+
+function showCachedWeather(err){
+    console.log(err)
+    return localStorage.getItem('description');
+
 }
 //FUNCTION THAT DRAWS WEATHER TO DOM
 function drawWeather(weatherStatus, place){
